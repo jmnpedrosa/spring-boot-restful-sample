@@ -1,0 +1,6 @@
+#B y default in Spring Boot the server port is 8080 but we can customize it here.
+server.port: 8080
+
+# Read the maven version of the project in POM into a variable that is used
+# to display in Swagger UI
+application.version: "@project.version@"
