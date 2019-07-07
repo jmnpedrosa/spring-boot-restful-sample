@@ -1,5 +1,15 @@
 package pt.jmnpedrosa.samples.springboot.restful.model;
 
+/**
+ * Our data model example.
+ * The entire service is dedicated to managing User objects of this
+ * class using CRUD operations.
+ *
+ * For the purposes of this demo, there is no persistent data storage so
+ * we are storing Users in a HashSet in memory. For the HashSet to work
+ * properly we have to override correctly the equals() ans hashCode() methods
+ * in this class.
+ */
 public class User {
 
   private String userName;
@@ -75,5 +85,32 @@ public class User {
 
   public void setCountry(String country) {
     this.country = country;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof User) {
+      User other = (User) o;
+      return other.getUserName().equals(this.userName);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return this.userName.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "userName='" + userName + '\'' +
+        ", email='" + email + '\'' +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", telephone='" + telephone + '\'' +
+        ", address='" + address + '\'' +
+        ", country='" + country + '\'' +
+        '}';
   }
 }
