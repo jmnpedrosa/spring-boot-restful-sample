@@ -1,5 +1,10 @@
 package pt.jmnpedrosa.samples.springboot.restful.model;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * Our data model example.
  * The entire service is dedicated to managing User objects of this
@@ -12,10 +17,18 @@ package pt.jmnpedrosa.samples.springboot.restful.model;
  */
 public class User {
 
+  @NotBlank
+  @Size(min = 6, max = 30)
   private String userName;
+  @Email
   private String email;
+  @NotBlank
+  @Size(max = 30)
   private String firstName;
+  @NotBlank
+  @Size(max = 30)
   private String lastName;
+  @Digits(integer = 9, fraction = 0)
   private String telephone;
   private String address;
   private String country;

@@ -13,4 +13,13 @@ public interface UserService {
    * @throws UserException if there is an error searching for the user.
    */
   User getUser(String userName) throws UserException;
+
+  /**
+   * Creates a new User if it does not exist yet.
+   *
+   * @param user the User to create.
+   * @return the created User.
+   * @throws UserException if the user already exists or there is an error in insertion.
+   */
+  User createUser(User user) throws UserException;
 }

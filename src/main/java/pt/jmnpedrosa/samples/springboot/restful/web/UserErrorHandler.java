@@ -2,6 +2,7 @@ package pt.jmnpedrosa.samples.springboot.restful.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pt.jmnpedrosa.samples.springboot.restful.error.UserErrorCode;
@@ -29,6 +30,14 @@ public class UserErrorHandler {
     response.setError(e.getError().getValue());
     response.setDescription(e.getMessage());
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<UserErrorResponse> handleError(MethodArgumentNotValidException e) {
+    UserErrorResponse response = new UserErrorResponse();
+    response.setError(UserErrorCode.INVALID_INPUT.getValue());
+    response.setDescription(e.getMessage());
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
   }
 
   @ExceptionHandler(Exception.class)
