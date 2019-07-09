@@ -22,4 +22,14 @@ public interface UserService {
    * @throws UserException if the user already exists or there is an error in insertion.
    */
   User createUser(User user) throws UserException;
+
+  /**
+   * Updates an existing user, by replacing it with an entire
+   * new User object.
+   *
+   * @param user the User to update
+   * @return the updated User object.
+   * @throws UserException if the user does not exist or could not be updated.
+   */
+  User updateUser(User user) throws UserException;
 }

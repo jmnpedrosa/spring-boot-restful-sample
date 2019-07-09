@@ -40,9 +40,8 @@ public class DefaultUserService implements UserService {
 
   @Override
   public User createUser(User user) throws UserException {
-    User existingUser = null;
     try {
-      existingUser = getUser(user.getUserName());
+      User existingUser = getUser(user.getUserName());
       if (existingUser != null) {
         LOG.error("Unable to create user [{}]. This username already exists.", user.getUserName());
         throw new UserAlreadyExistsException();
@@ -59,6 +58,17 @@ public class DefaultUserService implements UserService {
     }
 
     LOG.info("Added new user [{}].", user.getUserName());
+    return user;
+  }
+
+  @Override
+  public User updateUser(User user) throws UserException {
+    User existingUser = getUser(user.getUserName());
+    if (existingUser != null && existingUser.equals(user)) {
+      userSet.remove(existingUser);
+      userSet.add(user);
+      LOG.info("Existing user [{}] has been updated.", user.getUserName());
+    }
     return user;
   }
 }
