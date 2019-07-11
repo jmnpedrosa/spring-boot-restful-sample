@@ -104,4 +104,25 @@ public class DefaultUserServiceTest {
 
     userService.updateUser(user);
   }
+
+  @Test
+  public void test_deleteUser_OK() throws Exception {
+    User user = new User("userName");
+    user.setEmail("email@email.com");
+    user.setFirstName("firstName");
+    user.setLastName("lastName");
+    user.setTelephone("123456789");
+    user.setAddress("address");
+    user.setCountry("country");
+    when(userSet.stream()).then(i -> Stream.of(user));
+
+    User result = userService.deleteUser("userName");
+    assertEquals(user, result);
+  }
+
+  @Test(expected = UserNotFoundException.class)
+  public void test_deleteUser_UserNotFound() throws Exception {
+    userService.deleteUser("userName");
+  }
+
 }

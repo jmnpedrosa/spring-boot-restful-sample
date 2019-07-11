@@ -71,4 +71,14 @@ public class DefaultUserService implements UserService {
     }
     return user;
   }
+
+  @Override
+  public User deleteUser(String userName) throws UserException {
+    User user = getUser(userName);
+    if (user != null) {
+      userSet.remove(user);
+      LOG.info("User [{}] has been deleted.", userName);
+    }
+    return user;
+  }
 }

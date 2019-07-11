@@ -32,4 +32,14 @@ public interface UserService {
    * @throws UserException if the user does not exist or could not be updated.
    */
   User updateUser(User user) throws UserException;
+
+  /**
+   * Deletes an existing user, returning the deleted user.
+   *
+   * @param userName the userName of the user to delete.
+   * @return the User that has been deleted.
+   * @throws UserException if there is an error deleting the user, or it does not exist.
+   */
+  User deleteUser(String userName) throws UserException;
+
 }

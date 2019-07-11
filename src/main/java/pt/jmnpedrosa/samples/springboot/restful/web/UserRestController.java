@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,6 +58,17 @@ public class UserRestController {
   @PutMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public User updateUser(@RequestBody @Valid User user) throws UserException {
     return userService.updateUser(user);
+  }
+
+  /**
+   * Deletes an existing user, returning the deleted user.
+   *
+   * @param userName the userName of the user to delete.
+   * @return the User that has been deleted.
+   */
+  @DeleteMapping(value = "/user/{userName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public User deleteUser(@PathVariable String userName) throws UserException {
+    return userService.deleteUser(userName);
   }
 
 }
