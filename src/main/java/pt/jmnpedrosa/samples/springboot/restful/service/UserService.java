@@ -1,9 +1,17 @@
 package pt.jmnpedrosa.samples.springboot.restful.service;
 
+import java.util.List;
 import pt.jmnpedrosa.samples.springboot.restful.error.UserException;
 import pt.jmnpedrosa.samples.springboot.restful.model.User;
 
 public interface UserService {
+
+  /**
+   * Returns all existing users.
+   *
+   * @return a list of all User objects
+   */
+  List<User> getAllUsers();
 
   /**
    * Finds and returns a User object by its userName.

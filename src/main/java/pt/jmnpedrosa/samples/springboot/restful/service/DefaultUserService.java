@@ -1,5 +1,7 @@
 package pt.jmnpedrosa.samples.springboot.restful.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,11 @@ public class DefaultUserService implements UserService {
 
   @Autowired
   private Set<User> userSet;
+
+  @Override
+  public List<User> getAllUsers() {
+    return new ArrayList<>(userSet);
+  }
 
   @Override
   public User getUser(String userName) throws UserException {

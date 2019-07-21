@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,47 @@ public class UserRestControllerTest {
   public void setUp() {
     Mockito.reset(defaultUserService);
     webMockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
+
+  @Test
+  public void test_getAllUsers_OK() throws Exception {
+    User user1 = new User("userName1");
+    user1.setEmail("email1");
+    user1.setFirstName("firstName1");
+    user1.setLastName("lastName1");
+    user1.setTelephone("telephone1");
+    user1.setAddress("address1");
+    user1.setCountry("country1");
+
+    User user2 = new User("userName2");
+    user2.setEmail("email2");
+    user2.setFirstName("firstName2");
+    user2.setLastName("lastName2");
+    user2.setTelephone("telephone2");
+    user2.setAddress("address2");
+    user2.setCountry("country2");
+
+    when(defaultUserService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
+
+    webMockMvc.perform(get("/users")
+        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(jsonPath("$.[0].userName").value(user1.getUserName()))
+        .andExpect(jsonPath("$.[0].email").value(user1.getEmail()))
+        .andExpect(jsonPath("$.[0].firstName").value(user1.getFirstName()))
+        .andExpect(jsonPath("$.[0].lastName").value(user1.getLastName()))
+        .andExpect(jsonPath("$.[0].telephone").value(user1.getTelephone()))
+        .andExpect(jsonPath("$.[0].address").value(user1.getAddress()))
+        .andExpect(jsonPath("$.[0].country").value(user1.getCountry()))
+        .andExpect(jsonPath("$.[1].userName").value(user2.getUserName()))
+        .andExpect(jsonPath("$.[1].email").value(user2.getEmail()))
+        .andExpect(jsonPath("$.[1].firstName").value(user2.getFirstName()))
+        .andExpect(jsonPath("$.[1].lastName").value(user2.getLastName()))
+        .andExpect(jsonPath("$.[1].telephone").value(user2.getTelephone()))
+        .andExpect(jsonPath("$.[1].address").value(user2.getAddress()))
+        .andExpect(jsonPath("$.[1].country").value(user2.getCountry()))
+        .andDo(MockMvcResultHandlers.print());
   }
 
   @Test

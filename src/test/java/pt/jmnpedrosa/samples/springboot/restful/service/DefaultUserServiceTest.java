@@ -1,8 +1,10 @@
 package pt.jmnpedrosa.samples.springboot.restful.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.Test;
@@ -23,6 +25,16 @@ public class DefaultUserServiceTest {
 
   @InjectMocks
   private UserService userService = new DefaultUserService();
+
+  @Test
+  public void test_getAllUsers() throws Exception {
+    User user1 = new User("userName1");
+    User user2 = new User("userName2");
+    when(userSet.toArray()).thenReturn(new Object[]{user1, user2});
+    List<User> result = userService.getAllUsers();
+    assertNotNull(result);
+    assertEquals(2, result.size());
+  }
 
   @Test
   public void test_getUser_OK() throws Exception {

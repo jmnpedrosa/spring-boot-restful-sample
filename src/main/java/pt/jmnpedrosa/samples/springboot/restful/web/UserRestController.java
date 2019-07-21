@@ -1,6 +1,7 @@
 package pt.jmnpedrosa.samples.springboot.restful.web;
 
 
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,16 @@ public class UserRestController {
 
   @Autowired
   private UserService userService;
+
+  /**
+   * Returns all existing users.
+   *
+   * @return a list of all User objects
+   */
+  @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public List<User> getAllUsers() {
+    return userService.getAllUsers();
+  }
 
   /**
    * Finds and return a User based on it's username.
