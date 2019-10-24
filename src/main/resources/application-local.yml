@@ -1,7 +1,7 @@
 # Customize logging verbosity by package
 logging:
   level:
-    org.springframework: ERROR
+    org.springframework: INFO
     pt.jmnpedrosa.samples.springboot.restful: DEBUG
 
 # Enable swagger in this environment
