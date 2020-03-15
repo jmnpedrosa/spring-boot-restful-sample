@@ -20,7 +20,7 @@ import pt.jmnpedrosa.samples.springboot.restful.model.User;
 import pt.jmnpedrosa.samples.springboot.restful.service.UserService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserRestController {
 
   @Autowired
@@ -31,7 +31,7 @@ public class UserRestController {
    *
    * @return a list of all User objects
    */
-  @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @GetMapping("/users")
   public List<User> getAllUsers() {
     return userService.getAllUsers();
   }
@@ -42,7 +42,7 @@ public class UserRestController {
    * @param userName the user's name.
    * @return the User for that username.
    */
-  @GetMapping(value = "/user/{userName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @GetMapping("/user/{userName}")
   public User getUser(@PathVariable String userName) throws UserException {
     return userService.getUser(userName);
   }
@@ -53,7 +53,7 @@ public class UserRestController {
    * @param user the user to create.
    * @return the the created user.
    */
-  @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public User createUser(@RequestBody @Valid User user) throws UserException {
     return userService.createUser(user);
@@ -66,7 +66,7 @@ public class UserRestController {
    * @param user the user to update.
    * @return the new version of the user.
    */
-  @PutMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PutMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
   public User updateUser(@RequestBody @Valid User user) throws UserException {
     return userService.updateUser(user);
   }
@@ -77,7 +77,7 @@ public class UserRestController {
    * @param userName the userName of the user to delete.
    * @return the User that has been deleted.
    */
-  @DeleteMapping(value = "/user/{userName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @DeleteMapping("/user/{userName}")
   public User deleteUser(@PathVariable String userName) throws UserException {
     return userService.deleteUser(userName);
   }

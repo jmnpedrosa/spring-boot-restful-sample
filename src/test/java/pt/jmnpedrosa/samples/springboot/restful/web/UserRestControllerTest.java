@@ -70,9 +70,9 @@ public class UserRestControllerTest {
     when(defaultUserService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
 
     webMockMvc.perform(get("/users")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.[0].userName").value(user1.getUserName()))
         .andExpect(jsonPath("$.[0].email").value(user1.getEmail()))
         .andExpect(jsonPath("$.[0].firstName").value(user1.getFirstName()))
@@ -103,9 +103,9 @@ public class UserRestControllerTest {
     when(defaultUserService.getUser(any())).thenReturn(result);
 
     webMockMvc.perform(get("/user/userName")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.userName").value(result.getUserName()))
         .andExpect(jsonPath("$.email").value(result.getEmail()))
         .andExpect(jsonPath("$.firstName").value(result.getFirstName()))
@@ -122,9 +122,9 @@ public class UserRestControllerTest {
     when(defaultUserService.getUser(any())).thenThrow(exception);
 
     webMockMvc.perform(get("/user/userName")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.error").value(exception.getError().getValue()))
         .andExpect(jsonPath("$.error_description").value(exception.getMessage()))
         .andDo(MockMvcResultHandlers.print());
@@ -136,9 +136,9 @@ public class UserRestControllerTest {
     when(defaultUserService.getUser(any())).thenThrow(exception);
 
     webMockMvc.perform(get("/user/userName")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isInternalServerError())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.error").value(exception.getError().getValue()))
         .andExpect(jsonPath("$.error_description").value(exception.getMessage()))
         .andDo(MockMvcResultHandlers.print());
@@ -157,10 +157,10 @@ public class UserRestControllerTest {
     when(defaultUserService.createUser(any())).thenReturn(result);
 
     webMockMvc.perform(post("/user")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(new ObjectMapper().writeValueAsString(result)))
         .andExpect(status().isCreated())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.userName").value(result.getUserName()))
         .andExpect(jsonPath("$.email").value(result.getEmail()))
         .andExpect(jsonPath("$.firstName").value(result.getFirstName()))
@@ -182,10 +182,10 @@ public class UserRestControllerTest {
     result.setCountry("country");
 
     webMockMvc.perform(post("/user")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(new ObjectMapper().writeValueAsString(result)))
         .andExpect(status().isBadRequest())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.error").value(UserErrorCode.INVALID_INPUT.getValue()))
         .andExpect(jsonPath("$.error_description").exists())
         .andDo(MockMvcResultHandlers.print());
@@ -204,10 +204,10 @@ public class UserRestControllerTest {
     when(defaultUserService.updateUser(any())).thenReturn(result);
 
     webMockMvc.perform(put("/user")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(new ObjectMapper().writeValueAsString(result)))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.userName").value(result.getUserName()))
         .andExpect(jsonPath("$.email").value(result.getEmail()))
         .andExpect(jsonPath("$.firstName").value(result.getFirstName()))
@@ -232,10 +232,10 @@ public class UserRestControllerTest {
     when(defaultUserService.updateUser(any())).thenThrow(exception);
 
     webMockMvc.perform(put("/user")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(new ObjectMapper().writeValueAsString(result)))
         .andExpect(status().isNotFound())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.error").value(exception.getError().getValue()))
         .andExpect(jsonPath("$.error_description").value(exception.getMessage()))
         .andDo(MockMvcResultHandlers.print());
@@ -252,10 +252,10 @@ public class UserRestControllerTest {
     result.setCountry("country");
 
     webMockMvc.perform(put("/user")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(new ObjectMapper().writeValueAsString(result)))
         .andExpect(status().isBadRequest())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.error").value(UserErrorCode.INVALID_INPUT.getValue()))
         .andExpect(jsonPath("$.error_description").exists())
         .andDo(MockMvcResultHandlers.print());
@@ -274,9 +274,9 @@ public class UserRestControllerTest {
     when(defaultUserService.deleteUser(any())).thenReturn(result);
 
     webMockMvc.perform(delete("/user/userName")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.userName").value(result.getUserName()))
         .andExpect(jsonPath("$.email").value(result.getEmail()))
         .andExpect(jsonPath("$.firstName").value(result.getFirstName()))
@@ -293,9 +293,9 @@ public class UserRestControllerTest {
     when(defaultUserService.deleteUser(any())).thenThrow(exception);
 
     webMockMvc.perform(delete("/user/userName")
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.error").value(exception.getError().getValue()))
         .andExpect(jsonPath("$.error_description").value(exception.getMessage()))
         .andDo(MockMvcResultHandlers.print());
