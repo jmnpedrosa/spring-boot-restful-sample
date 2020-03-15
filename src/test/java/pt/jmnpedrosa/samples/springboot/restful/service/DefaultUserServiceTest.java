@@ -1,23 +1,24 @@
 package pt.jmnpedrosa.samples.springboot.restful.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pt.jmnpedrosa.samples.springboot.restful.error.UserAlreadyExistsException;
 import pt.jmnpedrosa.samples.springboot.restful.error.UserException;
 import pt.jmnpedrosa.samples.springboot.restful.error.UserNotFoundException;
 import pt.jmnpedrosa.samples.springboot.restful.model.User;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 public class DefaultUserServiceTest {
 
   @Mock
@@ -27,7 +28,7 @@ public class DefaultUserServiceTest {
   private UserService userService = new DefaultUserService();
 
   @Test
-  public void test_getAllUsers() throws Exception {
+  public void test_getAllUsers() {
     User user1 = new User("userName1");
     User user2 = new User("userName2");
     when(userSet.toArray()).thenReturn(new Object[]{user1, user2});
@@ -51,14 +52,16 @@ public class DefaultUserServiceTest {
     assertEquals(user, result);
   }
 
-  @Test(expected = UserException.class)
-  public void test_getUser_MissingInput() throws Exception {
-    userService.getUser(null);
+  @Test
+  public void test_getUser_MissingInput() {
+    assertThrows(UserException.class, () ->
+        userService.getUser(null));
   }
 
-  @Test(expected = UserNotFoundException.class)
-  public void test_getUser_UserNotFound() throws Exception {
-    userService.getUser("userName");
+  @Test
+  public void test_getUser_UserNotFound() {
+    assertThrows(UserNotFoundException.class, () ->
+        userService.getUser("userName"));
   }
 
   @Test
@@ -75,8 +78,8 @@ public class DefaultUserServiceTest {
     assertEquals(user, result);
   }
 
-  @Test(expected = UserAlreadyExistsException.class)
-  public void test_createUser_AlreadyExists() throws Exception {
+  @Test
+  public void test_createUser_AlreadyExists() {
     User user = new User("userName");
     user.setEmail("email@email.com");
     user.setFirstName("firstName");
@@ -86,7 +89,8 @@ public class DefaultUserServiceTest {
     user.setCountry("country");
     when(userSet.stream()).then(i -> Stream.of(user));
 
-    userService.createUser(user);
+    assertThrows(UserAlreadyExistsException.class, () ->
+        userService.createUser(user));
   }
 
   @Test
@@ -104,8 +108,8 @@ public class DefaultUserServiceTest {
     assertEquals(user, result);
   }
 
-  @Test(expected = UserNotFoundException.class)
-  public void test_updateUser_UserNotFound() throws Exception {
+  @Test
+  public void test_updateUser_UserNotFound() {
     User user = new User("userName");
     user.setEmail("email@email.com");
     user.setFirstName("firstName");
@@ -114,7 +118,8 @@ public class DefaultUserServiceTest {
     user.setAddress("address");
     user.setCountry("country");
 
-    userService.updateUser(user);
+    assertThrows(UserNotFoundException.class, () ->
+        userService.updateUser(user));
   }
 
   @Test
@@ -132,9 +137,10 @@ public class DefaultUserServiceTest {
     assertEquals(user, result);
   }
 
-  @Test(expected = UserNotFoundException.class)
-  public void test_deleteUser_UserNotFound() throws Exception {
-    userService.deleteUser("userName");
+  @Test
+  public void test_deleteUser_UserNotFound() {
+    assertThrows(UserNotFoundException.class, () ->
+        userService.deleteUser("userName"));
   }
 
 }
