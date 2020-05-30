@@ -1,5 +1,14 @@
-#B y default in Spring Boot the server port is 8080 but we can customize it here.
+# By default in Spring Boot the server port is 8080 but we can customize it here.
 server.port: 8080
+
+# Customize logging verbosity by package
+logging:
+  level:
+    org.springframework: INFO
+    pt.jmnpedrosa.samples.springboot.restful: DEBUG
+
+# Enable swagger API and UI.
+swagger.enabled: true
 
 # Read the maven version of the project in POM into a variable that is used
 # to display in Swagger UI

@@ -10,6 +10,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * This class configures Swagger to show all available endpoints inside our
@@ -20,6 +21,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * a flag is declared in properties to enable Swagger.
  */
 @Configuration
+@EnableSwagger2
 @ConditionalOnProperty(name = "swagger.enabled")
 public class SwaggerConfig {
 
