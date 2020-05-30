@@ -1,4 +1,0 @@
-# Configure the application to use the "local" profile when running locally.
-spring:
-  application.name: spring-boot-restful-sample
-  profiles.active: local

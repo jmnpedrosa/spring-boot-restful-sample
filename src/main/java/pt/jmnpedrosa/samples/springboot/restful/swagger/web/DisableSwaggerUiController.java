@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * a flag is declared in properties to enable it.
  */
 @RestController
-@ConditionalOnProperty(name = "swagger.enabled", havingValue = "false")
+@ConditionalOnProperty(name = "swagger.enabled", havingValue = "false", matchIfMissing = true)
 public class DisableSwaggerUiController {
 
   @GetMapping("swagger-ui.html")
